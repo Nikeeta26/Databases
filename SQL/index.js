@@ -25,6 +25,21 @@ app.get("/user",(req,res)=>{
   }
 });
 
+//GET our user
+app.get("/user",(req,res)=>{
+let  q ="select * from user";
+try{
+  connection.query(q,(err,result)=>{
+   
+      console.log(result);
+      res.render("show.ejs",{result});
+  })
+}catch(err){
+console.log("error");
+res,send("error");
+}
+});
+
 app.listen(3000,()=>{
   console.log(" server run on 3000");
 })
