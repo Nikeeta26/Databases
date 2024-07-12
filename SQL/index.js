@@ -12,25 +12,25 @@ const connection = mysql.createConnection({
   password:'nikeeta26'
 });
 
-app.get("/user",(req,res)=>{
-  let q = "select * from user";
-  try{
-  connection.query(q,(err,result)=>{
-  if(err) throw err;
-  console.log(result);
- res.send(result);
-  });
-}catch(e){
-    console.log(e);
-  }
-});
+// app.get("/user",(req,res)=>{
+//   let q = "select * from user";
+//   try{
+//   connection.query(q,(err,result)=>{
+//   if(err) throw err;
+//   console.log(result);
+//  res.send(result);
+//   });
+// }catch(e){
+//     console.log(e);
+//   }
+// });
 
 //GET our user
 app.get("/user",(req,res)=>{
 let  q ="select * from user";
 try{
   connection.query(q,(err,result)=>{
-   
+   if(err) throw err;
       console.log(result);
       res.render("show.ejs",{result});
   })
@@ -39,6 +39,49 @@ console.log("error");
 res,send("error");
 }
 });
+
+
+//edit route
+app.get("/user/:id/edit",(req,res)=>{
+  let {id} = req.params;
+let q = "select * from user where id = `${id}`";
+try{
+     connection.query(q,(err,result)=>{
+      if(err) throw err;
+      let user = result[0];
+       console.log(user);
+       res.render("edit.ejs",{user});
+     })
+}catch(e){
+
+}
+});
+
+app.patch("/user/:id",(req,res)=>{
+  let {id} = req.params;
+let q = "select * from user where id = `${id}`";
+try{
+      connection.query(q,(err,result)=>{
+        console.log(result);
+        let user = result[0];
+        if(password != user.foempassword)
+          {
+            res.send("wrong password");
+          }
+          else{
+            let q2 = `UPDATE user SET name '${newUsername}' WHERE id='${id} `;
+            connection.query(q2,(err,result)=>{
+                res.redirect("/user");
+            });
+  
+          }
+   
+      });
+    }catch(e){
+        res.send("error");
+    }
+
+})
 
 app.listen(3000,()=>{
   console.log(" server run on 3000");
@@ -52,6 +95,7 @@ let generateRandomUser = () =>{
      faker.internet.password(),
   ];
 }
+
 
 //let q = "insert into user (id,name,email,password) values (?, ?, ?, ?) ";
 // let user = [123,"nikeeta","nikeeta@gmail.com","nikeeta@26"];
