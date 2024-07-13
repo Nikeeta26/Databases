@@ -19,22 +19,18 @@
         <th>email</th>
     </tr>
     
-        <% for(user of result){%>
-    <tr>
-        <td><%=user.id%></td>
-        <td><%=user.name%></td>
-        <td><%=user.email%></td>
-        <tb><form method="get" action="http://localhost:8080/user/<%= user.id %>/edit">edit
-        </tb>
-        </form>
-        <tb><form method="get" action="http://localhost:8080/user/new">new add
-        </tb>
-        </form>
-        <form method="get" action="http://localhost:8080/user/<%= user.id %>/delete">delete
-        </tb>
-        </form>
-    </tr>
-    <%}%>
+    <% for (user of result) { %>
+        <tr>
+            <td><%=user.id%></td>
+            <td><%=user.name%></td>
+            <td><%=user.email%></td>
+          <td>
+            <form method="GET" action="/user/<%=user.id%>/edit">
+              <button>Edit username</button>
+            </form>
+          </td>
+        </tr>
+        <%} %>
    </table>
 </body>
 </html>

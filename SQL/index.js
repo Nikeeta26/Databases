@@ -1,91 +1,100 @@
-const { faker } = require('@faker-js/faker');
-const mysql = require("mysql2");
-const express = require("express");
-const app = express();
+// const { faker } = require('@faker-js/faker');
+// const mysql = require("mysql2");
+// const express = require("express");
+// const app = express();
+// const methodOverride = require("method-override");
+// const path = require("path");
 
 
-//connection query
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'delta_app',
-  password:'nikeeta26'
-});
+// app.set("view engin","ejs");
+// app.set("views",path.join(__dirname,"/views"));
+// app.use(methodOverride("_method"));
+// app.use(express.urlencoded({extended:true}));
 
-// app.get("/user",(req,res)=>{
-//   let q = "select * from user";
-//   try{
-//   connection.query(q,(err,result)=>{
-//   if(err) throw err;
-//   console.log(result);
-//  res.send(result);
-//   });
-// }catch(e){
-//     console.log(e);
-//   }
+// //connection query
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   database: 'delta_app',
+//   password:'nikeeta26'
 // });
 
-//GET our user
-app.get("/user",(req,res)=>{
-let  q ="select * from user";
-try{
-  connection.query(q,(err,result)=>{
-   if(err) throw err;
-      console.log(result);
-      res.render("show.ejs",{result});
-  })
-}catch(err){
-console.log("error");
-res,send("error");
-}
-});
+// // app.get("/user",(req,res)=>{
+// //   let q = "select * from user";
+// //   try{
+// //   connection.query(q,(err,result)=>{
+// //   if(err) throw err;
+// //   console.log(result);
+// //  res.send(result);
+// //   });
+// // }catch(e){
+// //     console.log(e);
+// //   }
+// // });
+
+// //GET our user
+// app.get("/user",(req,res)=>{
+// let  q ="select * from user";
+// try{
+//   connection.query(q,(err,result)=>{
+//    if(err) throw err;
+//       console.log(result);
+//       res.render("show.ejs",{result});
+//   })
+// }catch(err){
+// console.log("error");
+// res,send("error");
+// }
+// });
 
 
-//edit route
-app.get("/user/:id/edit",(req,res)=>{
-  let {id} = req.params;
-let q = "select * from user where id = `${id}`";
-try{
-     connection.query(q,(err,result)=>{
-      if(err) throw err;
-      let user = result[0];
-       console.log(user);
-       res.render("edit.ejs",{user});
-     })
-}catch(e){
+// //edit route
+// app.get("/user/:id/edit",async(req,res)=>{
+//   let{id} = req.params;
+// let q = `select * from user where id = '${id}'`;
+// try{
+//      connection.query(q,(err,result)=>{
+//       if(err) throw err;
+//       console.log(err);
+//       let user = result[0];
+//        console.log(user);
+//        res.render("edit.ejs",{user});
+//      })
+// }catch(e){
 
-}
-});
+// }
+// });
 
-app.patch("/user/:id",(req,res)=>{
-  let {id} = req.params;
-let q = "select * from user where id = `${id}`";
-try{
-      connection.query(q,(err,result)=>{
-        console.log(result);
-        let user = result[0];
-        if(password != user.foempassword)
-          {
-            res.send("wrong password");
-          }
-          else{
-            let q2 = `UPDATE user SET name '${newUsername}' WHERE id='${id} `;
-            connection.query(q2,(err,result)=>{
-                res.redirect("/user");
-            });
-  
-          }
-   
-      });
-    }catch(e){
-        res.send("error");
-    }
+// //update route
+// app.patch("/user/:id",(req,res)=>{
+//   let{id}=req.params;
+//   let{password:foempassword,name:newUsername} = req.body;
+//   let q = `select * from user where id='${id}'`;
+//   try{
+//     connection.query(q,(err,result)=>{
+//       console.log(result);
+//       let user = result[0];
+//       if(password != user.foempassword)
+//         {
+//           res.send("wrong password");
+//         }
+//         else{
+//           let q2 = `UPDATE user SET username='${newUsername}' WHERE id='${id}'`;
+//           connection.query(q2,(err,result)=>{
+//               res.redirect("/user");
+//           });
 
-})
+//         }
+ 
+//     });
+//   }catch(e){
+//       res.send("error");
+//   }
+// })
 
-app.listen(3000,()=>{
-  console.log(" server run on 3000");
-})
+// app.listen(3000,()=>{
+//   console.log(" server run on 3000");
+// })
 
 let generateRandomUser = () =>{
   return [
@@ -148,175 +157,176 @@ let generateRandomUser = () =>{
 
 //console.log(generateRandomUser());
 
-// const express = require("express");
-// const app = express();
-// const methodOverride = require("method-override");
-// let port = 8080;
-// const { v4: uuidv4 } = require("uuid");
-// const path = require("path");
+const express = require("express");
+const app = express();
+const methodOverride = require("method-override");
+let port = 8080;
+const { v4: uuidv4 } = require("uuid");
+const path = require("path");
 
 
-// app.set("view engin","ejs");
-// app.set("views",path.join(__dirname,"/views"));
-// app.use(methodOverride("_method"));
-// app.use(express.urlencoded({extended:true}));
-// import mysql from 'mysql2/promise';
+app.set("view engin","ejs");
+app.set("views",path.join(__dirname,"/views"));
+app.use(methodOverride("_method"));
+app.use(express.urlencoded({extended:true}));
+//import mysql from 'mysql2/promise';
+const mysql = require("mysql2");
 
-// app.listen(port,()=>{
-//   console.log("run on 8080 express");
-// });
+app.listen(port,()=>{
+  console.log("run on 8080 express");
+});
 
-// //home routs
-// app.get("/",(req,res)=>{
-// let q = 'select count(*) from user';
-// try{
-//   connection.query(q,(err,result)=>{
-//     if(err) throw err;
+//home routs
+app.get("/",(req,res)=>{
+let q = 'select count(*) from user';
+try{
+  connection.query(q,(err,result)=>{
+    if(err) throw err;
 
-//     let count = result[0]["count(*)"];
-//        console.log(result);
-//        res.render("home.ejs",count);
+    let count = result[0]["count(*)"];
+       console.log(result);
+       res.render("home.ejs",count);
     
-//       });
-// }catch(err){
-// console.log(err);
-// }
-// connection.end();
-// });
+      });
+}catch(err){
+console.log(err);
+}
+connection.end();
+});
 
-// //GET our user
-// app.get("/user",(req,res)=>{
-// let  q ="select * from user";
-// try{
-//   connection.query(q,(err,result)=>{
+//GET our user
+app.get("/user",(req,res)=>{
+let  q ="select * from user";
+try{
+  connection.query(q,(err,result)=>{
    
-//       console.log(result);
-//       res.render("show.ejs",{result});
-//   })
-// }catch(err){
-// console.log("error");
-// res,send("error");
-// }
-// });
+      console.log(result);
+      res.render("show.ejs",{result});
+  })
+}catch(err){
+console.log("error");
+res,send("error");
+}
+});
 
-// //edit route
-// app.get("/user/:id/edit",(req,res)=>{
-//   let{id} = req.params;
-//   let q = `select * from user where id='${id}'`;
-//   try{
-//     connection.query(q,(err,result)=>{
-//       console.log(result);
-//       let user = result[0];
-//       res.render("edit.ejs",{user});
-//     });
-//   }catch(e){
-//       res.send("error");
-//   }
-// });
+//edit route
+app.get("/user/:id/edit",(req,res)=>{
+  let{id} = req.params;
+  let q = `select * from user where id='${id}'`;
+  try{
+    connection.query(q,(err,result)=>{
+      console.log(result);
+      let user = result[0];
+      res.render("edit.ejs",{user});
+    });
+  }catch(e){
+      res.send("error");
+  }
+});
 
-// //update route
-// app.patch("/user/:id",(req,res)=>{
-//   let{id}=req.params;
-//   let{password:foempassword,name:newUsername} = req.body;
-//   let q = `select * from user where id='${id}'`;
-//   try{
-//     connection.query(q,(err,result)=>{
-//       console.log(result);
-//       let user = result[0];
-//       if(password != user.foempassword)
-//         {
-//           res.send("wrong password");
-//         }
-//         else{
-//           let q2 = `UPDATE user SET name '${newUsername}' WHERE id='${id} `;
-//           connection.query(q2,(err,result)=>{
-//               res.redirect("/user");
-//           });
+//update route
+app.patch("/user/:id",(req,res)=>{
+  let{id}=req.params;
+  let{password:foempassword,name:newUsername} = req.body;
+  let q = `select * from user where id='${id}'`;
+  try{
+    connection.query(q,(err,result)=>{
+      console.log(result);
+      let user = result[0];
+      if(foempassword != user.password)
+        {
+          res.send("wrong password");
+        }
+        else{
+          let q2 = `UPDATE user SET name '${newUsername}' WHERE id='${id} `;
+          connection.query(q2,(err,result)=>{
+              res.redirect("/user");
+          });
 
-//         }
+        }
  
-//     });
-//   }catch(e){
-//       res.send("error");
-//   }
-// })
+    });
+  }catch(e){
+      res.send("error");
+  }
+})
 
-// //add new
-// app.get("/user/new", (req, res) => {
-//   res.render("new.ejs");
-// });
+//add new
+app.get("/user/new", (req, res) => {
+  res.render("new.ejs");
+});
 
-// app.post("/user/new", (req, res) => {
-//   let { username, email, password } = req.body;
-//   let id = uuidv4();
-//   //Query to Insert New User
-//   let q = `INSERT INTO user (id, username, email, password) VALUES ('${id}','${username}','${email}','${password}') `;
+app.post("/user/new", (req, res) => {
+  let { username, email, password } = req.body;
+  let id = uuidv4();
+  //Query to Insert New User
+  let q = `INSERT INTO user (id, username, email, password) VALUES ('${id}','${username}','${email}','${password}') `;
 
-//   try {
-//     connection.query(q, (err, result) => {
-//       if (err) throw err;
-//       console.log("added new user");
-//       res.redirect("/user");
-//     });
-//   } catch (err) {
-//     res.send("some error occurred");
-//   }
-// });
-
-
-// //delete user
-// app.get("/user/:id/delete", (req, res) => {
-//   let { id } = req.params;
-//   let q = `SELECT * FROM user WHERE id='${id}'`;
-
-//   try {
-//     connection.query(q, (err, result) => {
-//       if (err) throw err;
-//       let user = result[0];
-//       res.render("delete.ejs", { user });
-//     });
-//   } catch (err) {
-//     res.send("some error with DB");
-//   }
-// });
-
-// app.delete("/user/:id/", (req, res) => {
-//   let { id } = req.params;
-//   let { password } = req.body;
-//   let q = `SELECT * FROM user WHERE id='${id}'`;
-
-//   try {
-//     connection.query(q, (err, result) => {
-//       if (err) throw err;
-//       let user = result[0];
-
-//       if (user.password != password) {
-//         res.send("WRONG Password entered!");
-//       } else {
-//         let q2 = `DELETE FROM user WHERE id='${id}'`; //Query to Delete
-//         connection.query(q2, (err, result) => {
-//           if (err) throw err;
-//           else {
-//             console.log(result);
-//             console.log("deleted!");
-//             res.redirect("/user");
-//           }
-//         });
-//       }
-//     });
-//   } catch (err) {
-//     res.send("some error with DB");
-//   }
-// });
+  try {
+    connection.query(q, (err, result) => {
+      if (err) throw err;
+      console.log("added new user");
+      res.redirect("/user");
+    });
+  } catch (err) {
+    res.send("some error occurred");
+  }
+});
 
 
-// // Create the connection to database
-// const connection = await mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     database: 'test',
-//     password:"nikeeta26"
-//   });
+//delete user
+app.get("/user/:id/delete", (req, res) => {
+  let { id } = req.params;
+  let q = `SELECT * FROM user WHERE id='${id}'`;
+
+  try {
+    connection.query(q, (err, result) => {
+      if (err) throw err;
+      let user = result[0];
+      res.render("delete.ejs", { user });
+    });
+  } catch (err) {
+    res.send("some error with DB");
+  }
+});
+
+app.delete("/user/:id/", (req, res) => {
+  let { id } = req.params;
+  let { password } = req.body;
+  let q = `SELECT * FROM user WHERE id='${id}'`;
+
+  try {
+    connection.query(q, (err, result) => {
+      if (err) throw err;
+      let user = result[0];
+
+      if (user.password != password) {
+        res.send("WRONG Password entered!");
+      } else {
+        let q2 = `DELETE FROM user WHERE id='${id}'`; //Query to Delete
+        connection.query(q2, (err, result) => {
+          if (err) throw err;
+          else {
+            console.log(result);
+            console.log("deleted!");
+            res.redirect("/user");
+          }
+        });
+      }
+    });
+  } catch (err) {
+    res.send("some error with DB");
+  }
+});
+
+
+// Create the connection to database
+const connection =  mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'delta_app',
+    password:"nikeeta26"
+  });
 
 
 //   getRandomUser =  ()=> {
