@@ -231,6 +231,7 @@ app.patch("/user/:id",(req,res)=>{
   let q = `select * from user where id='${id}'`;
   try{
     connection.query(q,(err,result)=>{
+      if(err) throw err;
       console.log(result);
       let user = result[0];
       if(foempassword != user.password)
@@ -257,10 +258,10 @@ app.get("/user/new", (req, res) => {
 });
 
 app.post("/user/new", (req, res) => {
-  let { username, email, password } = req.body;
+  let { name, email, password } = req.body;
   let id = uuidv4();
   //Query to Insert New User
-  let q = `INSERT INTO user (id, username, email, password) VALUES ('${id}','${username}','${email}','${password}') `;
+  let q = `INSERT INTO user (id, name, email, password) VALUES ('${id}','${name}','${email}','${password}') `;
 
   try {
     connection.query(q, (err, result) => {
