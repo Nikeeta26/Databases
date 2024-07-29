@@ -274,7 +274,6 @@ app.post("/user/new", (req, res) => {
   }
 });
 
-
 //delete user
 app.get("/user/:id/delete", (req, res) => {
   let { id } = req.params;
